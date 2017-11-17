@@ -6,7 +6,7 @@ import map.Boxes;
 public class Status {
 	Boxes boxPos;
 	int posx, posy;
-	int step;
+	int step;//current steps
 	public Status(Boxes a, int x, int y) {
 		boxPos = a;
 		posx = x;
