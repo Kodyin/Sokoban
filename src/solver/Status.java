@@ -7,10 +7,13 @@ public class Status {
 	Boxes boxPos;
 	int posx, posy;
 	int step;//current steps!
-	public Status(Boxes a, int x, int y) {
+	String path; //Path to reach current status
+	public Status(Boxes a, int x, int y, int s, String p) {
 		boxPos = a;
 		posx = x;
 		posy = y;
+		step = s;
+		path = p;
 	}
 	//Compare
 	public boolean equals(Object o){  
@@ -28,8 +31,13 @@ public class Status {
 		for(Box i: boxPos.getBoxList()) {
 			res += Integer.toString(i.getx()) + ',' + Integer.toString(i.gety())+':';
 		}
-		res += 'x' + Integer.toString(posx)+'y'+ Integer.toString(posy);
+		//res += 'x' + Integer.toString(posx)+'y'+ Integer.toString(posy); 
+		//WITHOUT xy, you can compare it to the goal string. With xy, determine whether it is same status. 
+		//Do the same thing when needed.
 		return res;
+	}
+	public String getPath() {
+		return path;
 	}
 	public int getStep() {
 		return step;
