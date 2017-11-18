@@ -6,6 +6,7 @@ import map.Boxes;
 public class Status {
 	Boxes boxPos;
 	int posx, posy;
+
 	int step;//current steps!
 	String path; //Path to reach current status
 	public Status(Boxes a, int x, int y, int s, String p) {
@@ -28,6 +29,7 @@ public class Status {
 	//Status String ID
 	public String getID() {
 		String res = "";
+		if (boxPos==null) return res;
 		for(Box i: boxPos.getBoxList()) {
 			res += Integer.toString(i.getx()) + ',' + Integer.toString(i.gety())+':';
 		}

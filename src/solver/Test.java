@@ -56,6 +56,7 @@ public class Test {
 //	
 		visited.put(sa.getID(),1);
 		System.out.println(visited.get(sb.getID()));
+		Search.Solve();
 		
 	}
 }

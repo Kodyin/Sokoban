@@ -42,6 +42,9 @@ public class Search {
 				visited.add(currString);
 			}	
 		}
+		System.out.println(M.getSol());
+		System.out.println(2);
+
 		
 	}
 }
