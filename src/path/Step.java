@@ -1,10 +1,16 @@
-package map;
+package path;
 
-public class Box implements Cloneable{
+import map.Box;
+
+public class Step {
 	int x, y;
-	public Box(int i, int j) {
+	int steps;
+	String path;
+	public Step(int i, int j, int s, String p) {
 		x = i;
 		y = j;
+		steps = s;
+		path = p;
 	}
 	public int getx() {
 		return x;
@@ -12,33 +18,29 @@ public class Box implements Cloneable{
 	public int gety() {
 		return y;
 	}
-	public void pushRight() {
+	public int getSteps() {
+		return steps;
+	}
+	public String getPath() {
+		return path;
+	}
+	
+	public void goRight() {
 		y++;
 	}
 	
-	public void pushLeft() {
+	public void goLeft() {
 		y--;
 	}
-	public void pushUp() {
+	public void goUp() {
 		x--;
 	}
-	public void pushDown() {
+	public void goDown() {
 		x++;
 	}
 	public String getID() {
 		return Integer.toString(x) + '-' + Integer.toString(y);
 	}
-	@Override  
-    public Object clone() throws CloneNotSupportedException  
-    {  
-		 Object o = null;
-	        try{
-	            o = (Box)super.clone();
-	        }catch(CloneNotSupportedException e){
-	            e.printStackTrace();
-	        }
-	        return o;  
-    }  
 	
 	public boolean equals(Object o){  
         if (this==o) return true;  
@@ -52,3 +54,4 @@ public class Box implements Cloneable{
           
     }  
 }
+

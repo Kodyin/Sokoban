@@ -1,12 +1,13 @@
 package map;
 
-import java.util.HashMap;
+import java.util.HashSet;
 
 import solver.*;
 
 public class SolMap {
 	int height, width;
-	HashMap<String, Integer> grid; //"1-1" stands for square at (1,1), the values are null-empty, 1-wall, 0-goal 
+	HashSet<String> wallGrid; 
+	HashSet<String> goalGrid;
 	Boxes b;
 	Boxes tarBoxes;//to use the boxes and status getID function.
 	String tar; //target Box string
@@ -15,6 +16,13 @@ public class SolMap {
 	public SolMap(){	
 		tar = "";
 		sol = "";
+		b = new Boxes();
+		tarBoxes = new Boxes();
+		wallGrid = new HashSet<String>();
+		goalGrid = new HashSet<String>();
+		tar = "";
+		sol = "";
+		
 	}
 	
 	public void set(int x, int y) {
@@ -22,6 +30,12 @@ public class SolMap {
 		width = y;
 	}
 	
+	public HashSet<String> getWalls(){
+		return wallGrid;
+	}
+	public HashSet<String> getGoals(){
+		return goalGrid;
+	}
 	public Boxes getBoxes() {
 		return b;
 	}
@@ -32,11 +46,11 @@ public class SolMap {
 		return Y;
 	}
 	public void addWall(int x, int y) {
-		grid.put(Integer.toString(x)+"-"+Integer.toString(y), 1);
+		wallGrid.add(Integer.toString(x)+"-"+Integer.toString(y));
 	}
 	
 	public void addGoal(int x, int y) {
-		grid.put(Integer.toString(x)+"-"+Integer.toString(y), 0);
+		goalGrid.add(Integer.toString(x)+"-"+Integer.toString(y));
 		tarBoxes.addBox(x, y);
 	}
 	//Use this only once

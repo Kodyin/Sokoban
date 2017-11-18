@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 
 import map.*;
 import path.BFS;
-import util.Parser;
+import util.*;
 
 
 public class Search {
@@ -18,7 +18,7 @@ public class Search {
 		PriorityQueue<Status> statusQueue = new PriorityQueue<Status>(new StatusComp());
 		//Map initiation
 		SolMap M = new SolMap();
-		Parser.ParseMap(M);
+		ParserTest.ParseTest(M);
 		//set and store target ID
 		M.setTar();
 		String target = M.getTarID();
@@ -36,15 +36,15 @@ public class Search {
 			//if this status not visited, explore it using BFS and add child status 
 			currString += 'x' + Integer.toString(curr.getx())+'y'+ Integer.toString(curr.gety()); 
 			if (!visited.contains(currString)) {
+				System.out.println("curr" + currString);
 				List<Status> childStatus = BFS.bfs(M, curr);
-				for(Status i : childStatus) statusQueue.add(i);
-				System.out.println(currString);
+				
+				System.out.println("child");
+				for(Status i : childStatus) {System.out.println(i.getID()); statusQueue.add(i);}
+				
 				visited.add(currString);
 			}	
 		}
 		System.out.println(M.getSol());
-		System.out.println(2);
-
-		
 	}
 }
