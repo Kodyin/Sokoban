@@ -40,7 +40,7 @@ public class BFS {
 				q.add(new Step(tx-1, ty, curr.steps+1, curr.path+'U'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !dead(m, tx-2, ty)) {
 				Status newS = new Status(s.getBoxes().copyBoxes(), tx-1, ty, s.getStep()+curr.steps+1, s.getPath()+curr.path+'U');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushUp();
@@ -56,7 +56,7 @@ public class BFS {
 				q.add(new Step(tx+1, ty, curr.steps+1, curr.path+'D'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !dead(m, tx+2, ty)) {
 				Status newS = new Status(s.getBoxes().copyBoxes(), tx+1, ty, s.getStep()+curr.steps+1, s.getPath()+curr.path+'D');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushDown();
@@ -72,7 +72,7 @@ public class BFS {
 				q.add(new Step(tx, ty-1, curr.steps+1, curr.path+'L'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !dead(m, tx, ty-2)) {
 				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty-1, s.getStep()+curr.steps+1, s.getPath()+curr.path+'L');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushLeft();
@@ -88,7 +88,7 @@ public class BFS {
 				q.add(new Step(tx, ty+1, curr.steps+1, curr.path+'R'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !dead(m, tx, ty+2)) {
 				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty+1, s.getStep()+curr.steps+1, s.getPath()+curr.path+'R');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushRight();
@@ -99,6 +99,22 @@ public class BFS {
 			
 		}
 		return res;
+	}
+	
+	public static boolean dead(SolMap m, int x, int y) {
+		if (m.getGoals().contains(Integer.toString(x)+'-'+Integer.toString(y)))
+			return false;
+		if (
+				(m.getWalls().contains(Integer.toString(x-1)+'-'+Integer.toString(y)) 
+						|| 
+				m.getWalls().contains(Integer.toString(x+1)+'-'+Integer.toString(y))) 
+				&& 
+				(m.getWalls().contains(Integer.toString(x)+'-'+Integer.toString(y-1)) 
+						|| 
+				m.getWalls().contains(Integer.toString(x)+'-'+Integer.toString(y+1)))
+			)
+			return true;
+		else return false;
 	}
 
 	
