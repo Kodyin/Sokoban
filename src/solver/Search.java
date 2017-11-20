@@ -22,6 +22,7 @@ public class Search {
 		//set and store target ID
 		M.setTar();
 		String target = M.getTarID();
+		System.out.println(target);
 		//add the original status
 		Status ini = new Status(M.getBoxes(), M.getX(), M.getY(), 0, "");
 		statusQueue.add(ini);
@@ -31,14 +32,14 @@ public class Search {
 			//find the solution, immediately set M.sol and terminate
 			if (currString.equals(target)) {
 				M.setSol(curr.getPath());
+				System.out.println("Ter");
 				break;
 			}
 			//if this status not visited, explore it using BFS and add child status 
 			currString += 'x' + Integer.toString(curr.getx())+'y'+ Integer.toString(curr.gety()); 
 			if (!visited.contains(currString)) {
-				//System.out.println("curr" + currString);
-				List<Status> childStatus = BFS.bfs(M, curr);
-				
+				//Parser.write("curr" + currString);
+				List<Status> childStatus = BFS.bfs(M, curr, visited);
 				//System.out.println("child");
 				for(Status i : childStatus) 
 				{

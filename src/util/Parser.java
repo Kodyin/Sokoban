@@ -1,6 +1,8 @@
 package util;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 
@@ -93,6 +95,19 @@ public class Parser {
 	    	   g.initial(a, b);
 	    	  }
 	    	  sc.close();
+	    }
+	    public static void write(String s) {
+            try {
+	    		File writename = new File(".\\result\\en\\output.txt"); 
+            writename.createNewFile(); 
+            BufferedWriter out = new BufferedWriter(new FileWriter(writename, true));  
+            out.append(s+ "\r\n"); 
+            out.flush();   
+            out.close();  
+  
+            } catch (Exception e) {  
+            		e.printStackTrace();  
+            }  
 	    }
 	    
 	    

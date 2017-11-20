@@ -55,6 +55,7 @@ public class SolMap {
 	}
 	//Use this only once
 	public void setTar() {
+		tarBoxes.sortBox();
 		Status tmp = new Status(tarBoxes, 0, 0, 0, "");
 		tar += tmp.getID();
 	}
