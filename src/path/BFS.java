@@ -46,6 +46,7 @@ public class BFS {
 				tmp.pushUp();
 				newS.getBoxes().getBoxes().put(bID, tmp);
 				newS.getBoxes().getBoxes().remove(aID);
+				newS.getBoxes().sortBox();
 				res.add(newS);
 			}
 			//Down
@@ -62,6 +63,7 @@ public class BFS {
 				tmp.pushDown();
 				newS.getBoxes().getBoxes().put(bID, tmp);
 				newS.getBoxes().getBoxes().remove(aID);
+				newS.getBoxes().sortBox();
 				res.add(newS);
 			}
 			//Left
@@ -78,6 +80,7 @@ public class BFS {
 				tmp.pushLeft();
 				newS.getBoxes().getBoxes().put(bID, tmp);
 				newS.getBoxes().getBoxes().remove(aID);
+				newS.getBoxes().sortBox();
 				res.add(newS);
 			}
 			//Right
@@ -94,6 +97,7 @@ public class BFS {
 				tmp.pushRight();
 				newS.getBoxes().getBoxes().put(bID, tmp);
 				newS.getBoxes().getBoxes().remove(aID);
+				newS.getBoxes().sortBox();
 				res.add(newS);
 			}
 			
