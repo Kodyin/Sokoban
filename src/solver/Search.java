@@ -36,11 +36,16 @@ public class Search {
 			//if this status not visited, explore it using BFS and add child status 
 			currString += 'x' + Integer.toString(curr.getx())+'y'+ Integer.toString(curr.gety()); 
 			if (!visited.contains(currString)) {
-				System.out.println("curr" + currString);
+				//System.out.println("curr" + currString);
 				List<Status> childStatus = BFS.bfs(M, curr);
 				
-				System.out.println("child");
-				for(Status i : childStatus) {System.out.println(i.getID()); statusQueue.add(i);}
+				//System.out.println("child");
+				for(Status i : childStatus) 
+				{
+						//System.out.println(i.getID()); 
+						statusQueue.add(i);
+					
+				}
 				
 				visited.add(currString);
 			}	

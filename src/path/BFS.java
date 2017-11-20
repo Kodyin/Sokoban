@@ -31,7 +31,7 @@ public class BFS {
 			String bID = "";
 			int tx = curr.getx(); 
 			int ty = curr.gety();
-			System.out.println(curr.getID());
+			//System.out.println(curr.getID());
 			//Up
 			aID = Integer.toString(tx-1) + '-' + Integer.toString(ty);
 			bID = Integer.toString(tx-2) + '-' + Integer.toString(ty);
