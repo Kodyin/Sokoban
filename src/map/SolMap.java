@@ -65,11 +65,13 @@ public class SolMap {
 		sol += s;
 	}
 	public String getSol() {
-		return sol;
+
+		return Integer.toString(sol.length()) + sol;
 	}
 	public void addBox(int x, int y) {
 		b.addBox(x, y);
 	}
+
 	public void initial(int x, int y) {
 		X=x;
 		Y=y;

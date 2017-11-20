@@ -18,7 +18,7 @@ public class Search {
 		PriorityQueue<Status> statusQueue = new PriorityQueue<Status>(new StatusComp());
 		//Map initiation
 		SolMap M = new SolMap();
-		ParserTest.ParseTest(M);
+		Parser.ParseMap(M,"data/data.txt");
 		//set and store target ID
 		M.setTar();
 		String target = M.getTarID();

@@ -35,9 +35,9 @@ public class Test {
 //		Status sc = new Status(c, 1, 1, 1, "");
 //		
 		
-		SolMap M = new SolMap();
+		//SolMap M = new SolMap();
 //		PriorityQueue<Status> StatusQueue = new PriorityQueue<Status>(new StatusComp());
-		Parser.ParseMap(M);
+		//Parser.ParseMap(M);
 		
 //		StatusQueue.add(sa);
 //		StatusQueue.add(sb);
