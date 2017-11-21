@@ -18,7 +18,7 @@ public class Search {
 		PriorityQueue<Status> statusQueue = new PriorityQueue<Status>(new StatusComp());
 		//Map initiation
 		SolMap M = new SolMap();
-		Parser.ParseMap(M,"data/data.txt");
+		ParserN.ParseMap(M,"data/s99.txt");
 		//set and store target ID
 		M.setTar();
 		String target = M.getTarID();
@@ -38,17 +38,18 @@ public class Search {
 			//if this status not visited, explore it using BFS and add child status 
 			currString += 'x' + Integer.toString(curr.getx())+'y'+ Integer.toString(curr.gety()); 
 			if (!visited.contains(currString)) {
-				//Parser.write("curr" + currString);
+				//Parser.write("curr  " + currString);
+				visited.add(currString);
 				List<Status> childStatus = BFS.bfs(M, curr, visited);
-				//System.out.println("child");
+				//Parser.write("child");
 				for(Status i : childStatus) 
 				{
-						//System.out.println(i.getID()); 
-						statusQueue.add(i);
+						//Parser.write(i.getID()+'x'+Integer.toString(i.getx())+'y'+Integer.toString(i.gety()) ); 
+						if(!visited.contains(i.getID()+ 'x' + Integer.toString(curr.getx())+'y'+ Integer.toString(curr.gety()) )) statusQueue.add(i);
 					
 				}
 				
-				visited.add(currString);
+				
 			}	
 		}
 		System.out.println(M.getSol());

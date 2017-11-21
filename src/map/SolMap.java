@@ -25,6 +25,12 @@ public class SolMap {
 		
 	}
 	
+	public void setx(int x) {
+		height = x;
+	}
+	public void sety(int y) {
+		width = y;
+	}
 	public void set(int x, int y) {
 		height = x;
 		width = y;
