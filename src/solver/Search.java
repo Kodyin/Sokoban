@@ -18,13 +18,18 @@ public class Search {
 		PriorityQueue<Status> statusQueue = new PriorityQueue<Status>(new StatusComp());
 		//Map initiation
 		SolMap M = new SolMap();
+		//Parser.ParseMap(M, "data/datac.txt");
 		ParserN.ParseMap(M,"data/s99.txt");
 		//set and store target ID
 		M.setTar();
 		String target = M.getTarID();
 		System.out.println(target);
+		M.initH();
+		System.out.println(M.getH().get("1-2"));
+		M.setBH();
+		System.out.println(M.getInitH());
 		//add the original status
-		Status ini = new Status(M.getBoxes(), M.getX(), M.getY(), 0, "");
+		Status ini = new Status(M.getBoxes(), M.getX(), M.getY(), 0, M.getInitH(), "");
 		statusQueue.add(ini);
 		while (!statusQueue.isEmpty()) {
 			Status curr = statusQueue.poll();

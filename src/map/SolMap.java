@@ -1,5 +1,6 @@
 package map;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 import solver.*;
@@ -12,7 +13,9 @@ public class SolMap {
 	Boxes tarBoxes;//to use the boxes and status getID function.
 	String tar; //target Box string
 	String sol;
+	int initH;
 	int X,Y; //player
+	HashMap<String, Integer> hMatrix; //Heuristic Matrix
 	public SolMap(){	
 		tar = "";
 		sol = "";
@@ -22,9 +25,32 @@ public class SolMap {
 		goalGrid = new HashSet<String>();
 		tar = "";
 		sol = "";
-		
+		hMatrix = new HashMap<String, Integer>();
+		initH = 0;
 	}
 	
+	public void setBH() {
+		int res = 0;
+		for(Box i: b.getBoxList()) res += hMatrix.get(Integer.toString(i.getx())+'-'+Integer.toString(i.gety()));
+		initH = res;
+	}
+	public int getInitH() {
+		return initH;
+	}
+	public HashMap<String, Integer> getH(){
+		return hMatrix;
+	}
+	public void initH() {
+		for(int i = 1; i<=height; i++) {
+			for(int j = 1; j<=width; j++) {
+				int min = Integer.MAX_VALUE;
+				for(Box b:tarBoxes.getBoxList()) {
+					min = Math.min(Math.abs(b.getx()-i) + Math.abs(b.gety()-j), min);
+				}
+				hMatrix.put(Integer.toString(i)+'-'+Integer.toString(j), min);
+			}
+		}
+	}
 	public void setx(int x) {
 		height = x;
 	}
@@ -62,7 +88,7 @@ public class SolMap {
 	//Use this only once
 	public void setTar() {
 		tarBoxes.sortBox();
-		Status tmp = new Status(tarBoxes, 0, 0, 0, "");
+		Status tmp = new Status(tarBoxes, 0, 0, 0, 0, "");
 		tar += tmp.getID();
 	}
 	public String getTarID() {

@@ -7,6 +7,6 @@ public class StatusComp implements Comparator<Object>{
     {
         Status a1 = (Status)o1;
         Status a2 = (Status)o2;
-        return Integer.compare(a1.getStep(), a2.getStep());
+        return Integer.compare(a1.getStep()+a1.getH(), a2.getStep()+a2.getH());
     }
 }

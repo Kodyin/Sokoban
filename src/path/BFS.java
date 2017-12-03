@@ -41,7 +41,8 @@ public class BFS {
 				visited.add(aID);
 			}
 			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadUp(m, bH, tx-2, ty)) {
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx-1, ty, s.getStep()+curr.steps+1, s.getPath()+curr.path+'U');
+				int newH = m.getH().get(bID) - m.getH().get(aID);
+				Status newS = new Status(s.getBoxes().copyBoxes(), tx-1, ty, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'U');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushUp();
 				newS.getBoxes().getBoxes().put(bID, tmp);
@@ -59,7 +60,8 @@ public class BFS {
 				visited.add(aID);
 			}
 			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadDown(m, bH, tx+2, ty)) {
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx+1, ty, s.getStep()+curr.steps+1, s.getPath()+curr.path+'D');
+				int newH = m.getH().get(bID) - m.getH().get(aID);
+				Status newS = new Status(s.getBoxes().copyBoxes(), tx+1, ty, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'D');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushDown();
 				newS.getBoxes().getBoxes().put(bID, tmp);
@@ -77,7 +79,8 @@ public class BFS {
 				visited.add(aID);
 			}
 			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadLeft(m, bH, tx, ty-2)) {
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty-1, s.getStep()+curr.steps+1, s.getPath()+curr.path+'L');
+				int newH = m.getH().get(bID) - m.getH().get(aID);
+				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty-1, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'L');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushLeft();
 				newS.getBoxes().getBoxes().put(bID, tmp);
@@ -95,7 +98,8 @@ public class BFS {
 				visited.add(aID);
 			}
 			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadRight(m, bH, tx, ty+2)) {
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty+1, s.getStep()+curr.steps+1, s.getPath()+curr.path+'R');
+				int newH = m.getH().get(bID) - m.getH().get(aID);
+				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty+1, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'R');
 				Box tmp = newS.getBoxes().getBoxes().get(aID);
 				tmp.pushRight();
 				newS.getBoxes().getBoxes().put(bID, tmp);

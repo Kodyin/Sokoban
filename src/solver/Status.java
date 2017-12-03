@@ -6,15 +6,20 @@ import map.Boxes;
 public class Status {
 	Boxes boxPos;
 	int posx, posy;
-
+	int h;
 	int step;//current steps!
 	String path; //Path to reach current status
-	public Status(Boxes a, int x, int y, int s, String p) {
+	public Status(Boxes a, int x, int y, int s, int he, String p) {
 		boxPos = a;
 		posx = x;
 		posy = y;
 		step = s;
 		path = p;
+		h=he;
+	}
+	
+	public int getH() {
+		return h;
 	}
 	//Compare
 	public boolean equals(Object o){  
