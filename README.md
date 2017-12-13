@@ -15,24 +15,21 @@ For each puzzle, we guarantee to find a optimal solution with the least moves.
 Compile files
 
     cd src
-    javac *.java
+    javac */*.java
 
 The main method is SokobanMain. The program takes command-line arguments with
 the following options.
 
-    java SokobanMain [-option] [Sokoban input file]
+    java solver/Main [-Datasource] [-Input format] [Sokoban input file]
 
-    Options
-        -b      Breadth-first search
-        -d      Depth-first search
-        -u      Uniform-cost search (move = 1, push = 2)
-        -gb     Greedy best-first search with number of boxes on goal heuristic
-        -gm     Greedy best-first search with Manhattan distances heuristic
-        -ab     AStar with number of boxes on goal heuristic
-        -am     AStar with goals and boxes Manhattan distances heuristic
-
-
-
+    Datasource
+        -l      Benchmark example
+        -d      Example files
+    
+    Input format
+        -m      Mapping format
+        -s      Statement format
+    e.g.  java solver/Main -l -s sokoban1.txt
 
 ## Input
 
