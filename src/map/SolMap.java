@@ -116,7 +116,7 @@ public class SolMap {
 	}
 	public String getSol() {
 
-		return Integer.toString(sol.length()) + sol;
+		return Integer.toString(sol.length()) + ' ' + sol;
 	}
 	public void addBox(int x, int y) {
 		b.addBox(x, y);
