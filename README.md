@@ -1,6 +1,6 @@
 # Sokoban
 AI solver
-CS271 Fall term project
+CS271 2017 Fall term project
 Author: Gaozhiquan Wang
 
 ## Project target
