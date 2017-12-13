@@ -3,15 +3,16 @@ package util;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 
 import map.SolMap;
 
 public class ParserN {
-	public static void ParseMap(SolMap m, String filename) {
+	public static void ParseMap(SolMap m, String filename) throws IOException {
 		Scanner sc;
-	        try {
+//	        try {
 	            sc = new Scanner(new File(filename));
 	            int i = 0;
 	            while (sc.hasNextLine()) {
@@ -20,10 +21,10 @@ public class ParserN {
 	            		if (str.charAt(0) != 's') parseLine(m, str, i);
 	            }
 	            m.setx(i);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return;
-	        }
+//	        } catch (IOException e) {
+//				System.out.println("Puzzle file not found");
+//				return;
+//			} 
 
 	        // Iterate over the lines in the file, adding new
 	        // vertices as they are found and connecting them with edges.

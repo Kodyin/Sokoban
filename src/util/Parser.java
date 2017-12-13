@@ -3,15 +3,16 @@ package util;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 
 import map.SolMap;
 
 public class Parser {
-	public static void ParseMap(SolMap m, String filename) {
+	public static void ParseMap(SolMap m, String filename) throws IOException{
 		Scanner sc;
-	        try {
+	       
 	            sc = new Scanner(new File(filename));
 	            if (sc.hasNextLine()){
 	                String str = sc.nextLine();
@@ -33,10 +34,7 @@ public class Parser {
 	                String str = sc.nextLine();
 	                if (str.charAt(0) != 's') parseInit(m, str);
 	              }  
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return;
-	        }
+	        
 
 	        // Iterate over the lines in the file, adding new
 	        // vertices as they are found and connecting them with edges.
@@ -49,7 +47,7 @@ public class Parser {
 	    	  while(sc.hasNext()){
 	    		  int a = sc.nextInt();
 	    		  int b = sc.nextInt();
-	    	   g.set(a, b);
+	    	   g.set(b, a);
 	    	  }
 	    	  sc.close();
 	    }

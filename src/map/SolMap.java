@@ -61,7 +61,24 @@ public class SolMap {
 		height = x;
 		width = y;
 	}
-	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for (int row = 1; row <= height; row++) {
+			for (int col = 1; col <= width; col++) {
+				if(wallGrid.contains(Integer.toString(row)+"-"+Integer.toString(col))) builder.append('#');
+				else if(goalGrid.contains(Integer.toString(row)+"-"+Integer.toString(col)) 
+						&& b.getBoxes().containsKey(Integer.toString(row)+"-"+Integer.toString(col))) builder.append('*');
+				else if(goalGrid.contains(Integer.toString(row)+"-"+Integer.toString(col)) && X==row && Y==col) builder.append('+');
+				else if(goalGrid.contains(Integer.toString(row)+"-"+Integer.toString(col))) builder.append('.');
+				else if(b.getBoxes().containsKey(Integer.toString(row)+"-"+Integer.toString(col))) builder.append('$');
+				else if(X==row && Y==col) builder.append('@');
+				else builder.append(' ');
+			}
+			builder.append('\n');
+		}
+		return builder.toString();
+	}
 	public HashSet<String> getWalls(){
 		return wallGrid;
 	}
