@@ -23,11 +23,7 @@ public class Main {
 		} catch (IOException e) {
 			System.out.println("Puzzle file not found");
 		} 
-//		}catch (IOException e) {
-//		throw IOException e;
-//	System.out.println("Puzzle file not found");
-//	return;
-//} 
+
 		
 	}
 }

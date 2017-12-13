@@ -9,6 +9,7 @@ import map.*;
 import path.BFS;
 import util.*;
 
+ 
 
 public class Search {
 	
@@ -42,6 +43,7 @@ public class Search {
 		Status ini = new Status(M.getBoxes(), M.getX(), M.getY(), 0, M.getInitH(), "");
 		statusQueue.add(ini);
 		int states = 1;
+		Count c = new Count();
 		while (!statusQueue.isEmpty()) {
 			Status curr = statusQueue.poll();
 			String currString = curr.getID();
@@ -55,18 +57,20 @@ public class Search {
 			if (!visited.contains(currString)) {
 				states++;
 				visited.add(currString);
-				List<Status> childStatus = BFS.bfs(M, curr, visited);
+				List<Status> childStatus = BFS.bfs(M, curr, visited, c);
 				for(Status i : childStatus) 
 				{
 						if(!visited.contains(i.getID()+ 'x' + Integer.toString(curr.getx())+'y'+ Integer.toString(curr.gety()) )) statusQueue.add(i);
-				}
-				
-				
+						else c.seen++;
+				}		
 			}	
+			else c.seen++;
 		}
 		long endTime=System.currentTimeMillis(); //EndTime  
 		System.out.println("Solution: " + M.getSol());
 		System.out.println("States explored: " + states);
+		System.out.println("States seen before: " + Integer.toString(c.seen));
+		System.out.println("Dead-lock pruned: " + Integer.toString(c.pruned));
 		System.out.println("Millis elapsed: "+(endTime-startTime)+"ms");  
 
 	}

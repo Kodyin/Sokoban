@@ -10,10 +10,11 @@ import java.util.Queue;
 import map.*;
 import solver.*;
 
+
 public class BFS {
 	
 	
-	public static List<Status> bfs(SolMap m, Status s, HashSet<String> v){
+	public static List<Status> bfs(SolMap m, Status s, HashSet<String> v, Count c){
 		List<Status> res = new LinkedList<Status>();
 		HashSet<String> visited = new HashSet<String>();
 		//use box class to take steps.
@@ -31,7 +32,6 @@ public class BFS {
 			String bID = "";
 			int tx = curr.getx(); 
 			int ty = curr.gety();
-			//System.out.println(curr.getID());
 			//Up
 			aID = Integer.toString(tx-1) + '-' + Integer.toString(ty);
 			bID = Integer.toString(tx-2) + '-' + Integer.toString(ty);
@@ -40,16 +40,20 @@ public class BFS {
 				q.add(new Step(tx-1, ty, curr.steps+1, curr.path+'U'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadUp(m, bH, tx-2, ty)) {
-				int newH = m.getH().get(bID) - m.getH().get(aID);
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx-1, ty, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'U');
-				Box tmp = newS.getBoxes().getBoxes().get(aID);
-				tmp.pushUp();
-				newS.getBoxes().getBoxes().put(bID, tmp);
-				newS.getBoxes().getBoxes().remove(aID);
-				newS.getBoxes().sortBox();
-				String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
-				if (!v.contains(i)) res.add(newS);
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+				if (!deadUp(m, bH, tx-2, ty)) {
+					int newH = m.getH().get(bID) - m.getH().get(aID);
+					Status newS = new Status(s.getBoxes().copyBoxes(), tx-1, ty, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'U');
+					Box tmp = newS.getBoxes().getBoxes().get(aID);
+					tmp.pushUp();
+					newS.getBoxes().getBoxes().put(bID, tmp);
+					newS.getBoxes().getBoxes().remove(aID);
+					newS.getBoxes().sortBox();
+					String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
+					if (!v.contains(i)) res.add(newS);
+					else c.seen++;
+				}
+				else c.pruned++;			
 			}
 			//Down
 			aID = Integer.toString(tx+1) + '-' + Integer.toString(ty);
@@ -59,16 +63,20 @@ public class BFS {
 				q.add(new Step(tx+1, ty, curr.steps+1, curr.path+'D'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadDown(m, bH, tx+2, ty)) {
-				int newH = m.getH().get(bID) - m.getH().get(aID);
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx+1, ty, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'D');
-				Box tmp = newS.getBoxes().getBoxes().get(aID);
-				tmp.pushDown();
-				newS.getBoxes().getBoxes().put(bID, tmp);
-				newS.getBoxes().getBoxes().remove(aID);
-				newS.getBoxes().sortBox();
-				String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
-				if (!v.contains(i)) res.add(newS);
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+				if (!deadDown(m, bH, tx+2, ty)) {
+					int newH = m.getH().get(bID) - m.getH().get(aID);
+					Status newS = new Status(s.getBoxes().copyBoxes(), tx+1, ty, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'D');
+					Box tmp = newS.getBoxes().getBoxes().get(aID);
+					tmp.pushDown();
+					newS.getBoxes().getBoxes().put(bID, tmp);
+					newS.getBoxes().getBoxes().remove(aID);
+					newS.getBoxes().sortBox();
+					String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
+					if (!v.contains(i)) res.add(newS);
+					else c.seen++;
+				}
+				else c.pruned++;
 			}
 			//Left
 			aID = Integer.toString(tx) + '-' + Integer.toString(ty-1);
@@ -78,35 +86,42 @@ public class BFS {
 				q.add(new Step(tx, ty-1, curr.steps+1, curr.path+'L'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadLeft(m, bH, tx, ty-2)) {
-				int newH = m.getH().get(bID) - m.getH().get(aID);
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty-1, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'L');
-				Box tmp = newS.getBoxes().getBoxes().get(aID);
-				tmp.pushLeft();
-				newS.getBoxes().getBoxes().put(bID, tmp);
-				newS.getBoxes().getBoxes().remove(aID);
-				newS.getBoxes().sortBox();
-				String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
-				if (!v.contains(i)) res.add(newS);
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+				if (!deadLeft(m, bH, tx, ty-2)) {
+					int newH = m.getH().get(bID) - m.getH().get(aID);
+					Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty-1, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'L');
+					Box tmp = newS.getBoxes().getBoxes().get(aID);
+					tmp.pushLeft();
+					newS.getBoxes().getBoxes().put(bID, tmp);
+					newS.getBoxes().getBoxes().remove(aID);
+					newS.getBoxes().sortBox();
+					String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
+					if (!v.contains(i)) res.add(newS);
+					else c.seen++;
+				}
+				else c.pruned++;
 			}
 			//Right
 			aID = Integer.toString(tx) + '-' + Integer.toString(ty+1);
 			bID = Integer.toString(tx) + '-' + Integer.toString(ty+2);
-			
 			if(!visited.contains(aID) && !bH.containsKey(aID) && !wH.contains(aID)) {
 				q.add(new Step(tx, ty+1, curr.steps+1, curr.path+'R'));
 				visited.add(aID);
 			}
-			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID) && !deadRight(m, bH, tx, ty+2)) {
-				int newH = m.getH().get(bID) - m.getH().get(aID);
-				Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty+1, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'R');
-				Box tmp = newS.getBoxes().getBoxes().get(aID);
-				tmp.pushRight();
-				newS.getBoxes().getBoxes().put(bID, tmp);
-				newS.getBoxes().getBoxes().remove(aID);
-				newS.getBoxes().sortBox();
-				String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
-				if (!v.contains(i)) res.add(newS);
+			if(bH.containsKey(aID) && !bH.containsKey(bID) && !wH.contains(bID)) {
+				if (!deadRight(m, bH, tx, ty+2)) {
+					int newH = m.getH().get(bID) - m.getH().get(aID);
+					Status newS = new Status(s.getBoxes().copyBoxes(), tx, ty+1, s.getStep()+curr.steps+1, s.getH()+newH, s.getPath()+curr.path+'R');
+					Box tmp = newS.getBoxes().getBoxes().get(aID);
+					tmp.pushRight();
+					newS.getBoxes().getBoxes().put(bID, tmp);
+					newS.getBoxes().getBoxes().remove(aID);
+					newS.getBoxes().sortBox();
+					String i = newS.getID() + 'x' + Integer.toString(newS.getx())+'y'+ Integer.toString(newS.gety()); 
+					if (!v.contains(i)) res.add(newS);
+					else c.seen++;
+				}
+				else c.pruned++;
 			}
 			
 		}
@@ -273,59 +288,4 @@ public class BFS {
 	public static String getID(int x, int y) {
 		return Integer.toString(x)+ '-' + Integer.toString(y);
 	}
-	public static boolean dead(SolMap m, HashMap<String, Box> bH, int x, int y, int d) {
-		if (m.getGoals().contains(Integer.toString(x)+'-'+Integer.toString(y)))
-			return false;
-		boolean fixedX = false, fixedY = false;
-		if (
-				m.getWalls().contains(Integer.toString(x-1)+'-'+Integer.toString(y)) 
-						|| 
-				m.getWalls().contains(Integer.toString(x+1)+'-'+Integer.toString(y))
-			)
-			fixedX = true;
-		if (
-				(m.getWalls().contains(Integer.toString(x)+'-'+Integer.toString(y-1)) 
-						|| 
-				m.getWalls().contains(Integer.toString(x)+'-'+Integer.toString(y+1)))
-			)
-			fixedY = true;
-		if (fixedX && fixedY)  return true;
-		//Vertical
-		if (d<=2 && fixedX && (bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y-1)) || bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y+1)) ))
-			return true;
-		//Horizontal
-		if (d>2 && fixedY && (bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y)) || bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y)) ))
-			return true;
-		if ( d==1 && bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y)) && 
-		(
-			(bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y-1)) && bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y-1)))
-			||
-			(bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y+1)) && bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y+1)))
-		) )
-		return true;
-		if ( d==2 && bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y)) && 
-				(
-					(bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y-1)) && bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y-1)))
-					||
-					(bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y+1)) && bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y+1)))
-				) ) 
-				return true; 
-		if ( d==3 && bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y-1)) && 
-				(
-					(bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y)) && bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y-1)))
-					||
-					(bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y)) && bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y-1)))
-				) )
-				return true; 
-		if ( d==4 && bH.containsKey(Integer.toString(x)+'-'+Integer.toString(y+1)) && 
-				(
-					(bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y)) && bH.containsKey(Integer.toString(x-1)+'-'+Integer.toString(y+1)))
-					||
-					(bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y+1)) && bH.containsKey(Integer.toString(x+1)+'-'+Integer.toString(y+1)))
-				) )
-				return true; 
-		return false;
-	}
-
-	
 }
