@@ -1,10 +1,12 @@
 # Sokoban
 AI solver
 CS271 2017 Fall term project
-Author: Gaozhiquan Wang
+
+
+Author: Gaozhiquan Wang, Luqi Tian, Yishan Ma
 
 ## Project target
-We build this prototype to solve Sokoban puzzles with given map matrix. We used the concept similar to A*, which is a search algorithm based on status.
+We build this prototype to solve Sokoban puzzles with given map matrix. We used the concept similar to A*, which is a search algorithm based on states.
 
 For each puzzle, we guarantee to find a optimal solution with the least moves.
 
@@ -23,13 +25,14 @@ the following options.
     java solver/Main [-Datasource] [-Input format] [Sokoban input file]
 
     Datasource
-        -l      Benchmark example
-        -d      Example files
+        -l      Benchmark example   (under dir: src/data/Sokoban)
+        -d      Example files       (under dir: src/data)
     
     Input format
         -m      Mapping format
         -s      Statement format
     e.g.  java solver/Main -l -s sokoban1.txt
+          java solver/Main -d -m m1.txt
 
 ## Input
 
@@ -60,7 +63,9 @@ Statement format
 
 The output is in the following format.
 
-    1. String representation of initial state
+    1. String representation of initial map
     2. Move solution
     3. Number of states explored
-    4. Time elapsed in millis
+    4. States seen before (identical states)
+    5. Pruned deadlock states
+    6. Time elapsed in millis
