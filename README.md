@@ -19,8 +19,7 @@ Compile files
     cd src
     javac */*.java
 
-The main method is SokobanMain. The program takes command-line arguments with
-the following options.
+The program takes command-line arguments with the following options.
 
     java solver/Main [-Datasource] [-Input format] [Sokoban input file]
 
